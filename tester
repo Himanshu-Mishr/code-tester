@@ -1,0 +1,147 @@
+#!/bin/bash
+#
+# Title : the Ultimate Programming tester 
+# Author : Himanshu Mishra
+#
+#  Copyright 2013 Himanshu Mishra <himanshu.m786@gmail.com>
+#  
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#  
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#  
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#
+
+# color output snippet for shell script
+RCol='\e[0m'    # Text Reset
+
+# Regular           Bold                Underline           High Intensity      BoldHigh Intens     Background          High Intensity Backgrounds
+Bla='\e[0;30m';     BBla='\e[1;30m';    UBla='\e[4;30m';    IBla='\e[0;90m';    BIBla='\e[1;90m';   On_Bla='\e[40m';    On_IBla='\e[0;100m';
+Red='\e[0;31m';     BRed='\e[1;31m';    URed='\e[4;31m';    IRed='\e[0;91m';    BIRed='\e[1;91m';   On_Red='\e[41m';    On_IRed='\e[0;101m';
+Gre='\e[0;32m';     BGre='\e[1;32m';    UGre='\e[4;32m';    IGre='\e[0;92m';    BIGre='\e[1;92m';   On_Gre='\e[42m';    On_IGre='\e[0;102m';
+Yel='\e[0;33m';     BYel='\e[1;33m';    UYel='\e[4;33m';    IYel='\e[0;93m';    BIYel='\e[1;93m';   On_Yel='\e[43m';    On_IYel='\e[0;103m';
+Blu='\e[0;34m';     BBlu='\e[1;34m';    UBlu='\e[4;34m';    IBlu='\e[0;94m';    BIBlu='\e[1;94m';   On_Blu='\e[44m';    On_IBlu='\e[0;104m';
+Pur='\e[0;35m';     BPur='\e[1;35m';    UPur='\e[4;35m';    IPur='\e[0;95m';    BIPur='\e[1;95m';   On_Pur='\e[45m';    On_IPur='\e[0;105m';
+Cya='\e[0;36m';     BCya='\e[1;36m';    UCya='\e[4;36m';    ICya='\e[0;96m';    BICya='\e[1;96m';   On_Cya='\e[46m';    On_ICya='\e[0;106m';
+Whi='\e[0;37m';     BWhi='\e[1;37m';    UWhi='\e[4;37m';    IWhi='\e[0;97m';    BIWhi='\e[1;97m';   On_Whi='\e[47m';    On_IWhi='\e[0;107m';
+
+# usage :: Then you can just echo -e "${Blu}blue ${Red}red ${RCol}etc...."
+
+# printing the starting line and then 
+# color output for file name and working directory
+echo -e "${Gre} ----------- ${BYel}Code Tester ${Gre}---------------"
+echo -e " working directory : ${BGre}$PWD"
+
+#taking two argument
+filename=$2  # name of the file to be compiled
+option=$1    # option argument 
+
+# if no argument is given 
+if [ -z $filename ] && [ -z $option ]; then
+  filename="-help"
+  option="-help"
+fi
+# changing the variable name when option is not given
+# and our option contains the filename
+# we are making filename = option
+if [ -z $filename ]; then
+  filename=$option
+fi
+
+# clearing out the extension from filename
+var=`echo "$filename" | cut -d'.' -f1`
+ 
+#---------------------------------------------------- HELP MENU
+if [ ${filename} = "-help" ] || [ ${option} = "-help" ]; then
+  echo -e "${Blu} Tester Help Menu"
+  echo -e "${Blu} Usage: tester [OPTION]... [FILE]"
+  echo -e "${Blu} Options and arguments "
+  echo -e " ${BBlu}-help${Blu}             : displays the help options "
+  echo -e "${BBlu} -debug${Blu}            : turns ON the debug option for the output file "
+  echo -e "${BBlu} -memory_profiler${Blu}  : A module for monitoring memory usage of a Python program "
+  echo -e "${BBlu} -line_profiler${Blu}    : Line-by-line profiler for Python program"
+  echo -e "${BBlu} -pypy${Blu}             : fast, compliant alternative implementation of the Python language"
+fi
+# displaying the FILE TYPE 
+# TEXT FILETPYE 
+
+if [ ${filename: -4} = ".txt" ]; then
+  echo -e "${Gre}        file type : Text"
+
+#---------------------------------------------------- C PROGRAMMING FILETYPE
+elif [ ${filename: -2} = ".c" ]; then
+  echo -e "${BYel} Output filename : $var"
+  echo -e "${Yel} Compiling.........."
+  echo -e "${Whi}"
+  gcc $filename -o $var
+  ./$var
+
+#---------------------------------------------------- C++ PROGRAMMING FILETYPE
+elif [ ${filename: -4} = ".cpp" ]; then
+  echo -e "${BYel} Output filename : $var"
+  echo -e "${Yel} Compiling.........."
+  echo -e "${Whi}"
+  g++ $filename -o $var
+  ./$var
+
+#----------------------------------------------------JAVA SCRIPT FILETYPE
+elif [ ${filename: -5} = ".java" ]; then
+  echo -e "${BYel} Output class name : $var"
+  echo -e "${Yel} Compiling.........."
+  javac $filename
+  java $var
+#--------------------------------------------------- COMPILING FOR MEMORY_PROFILER
+elif [ $option = "-memory_profiler" ] && [ ${filename: -3} = ".py" ]; then
+  echo -e "${Yel} Compiling for ${BYel}memory_profiler "
+  echo -e "${Yel} Compiling.........."
+  echo -e "${BYel} Output by kernprof :--"
+  echo -e "${Whi}"
+  ./kernprof -l $filename
+    echo -e "${BYel} Output by python :--"
+  echo -e "${Whi}"
+  python -m memory_profiler $filename
+
+#--------------------------------------------------- COMPILING FOR LINE_PROFILER
+elif [ $option = "-line_profiler" ] && [ ${filename: -3} = ".py" ]; then
+  echo -e "${Yel} Compiling for ${BYel}line_profiler "
+  echo -e "${Yel} Compiling.........."
+  echo -e "${BYel} Output by kernprof :--"
+  echo -e "${Whi}"
+  ./kernprof -l $filename
+  echo -e "${BYel} Output by python :--"
+  echo -e "${Whi}"
+  python -m line_profiler ${filename}.lprof
+
+#--------------------------------------------------- COMPILING WITH PYPY  
+elif [ $option = "-pypy" ] && [ ${filename: -3} = ".py" ]; then
+  echo -e "${Yel} Compiling with ${BYel}pypy ${Yel}(supports Python2.7)"
+  echo -e "${Whi}"
+  pypy $filename
+  echo ""
+  echo -e "${Gre} ---------------- *** -------------------"
+  exit 1;
+
+#--------------------------------------------------- -PYTHON FILETYPE
+elif [ ${filename: -3} = ".py" ]; then  
+  echo -e "${Yel} Compiling with ${BYel}Python3"
+  echo -e "${Whi}"
+  python3 $filename 
+
+#---------------------------------------------------- Default output
+else
+  echo ""
+  echo -e "${BRed} MSG : ${BYel}Enter a valid option and/or filename"
+  echo -e "${BRed} MSG : ${BYel}This tester supports .c .cpp .py .java files"
+
+fi
+echo ""
+echo -e "${Gre} ---------------- *** -------------------"
