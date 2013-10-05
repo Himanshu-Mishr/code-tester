@@ -92,6 +92,13 @@ elif [ ${filename: -4} = ".cpp" ]; then
   echo -e "${Whi}"
   g++ $filename -o $var
   ./$var
+#---------------------------------------------------- JAVA DEBUGGING OPTION
+elif [ $option = "-debug" ] && [ ${filename: -5} = ".java" ]; then
+  echo -e "${BYel} Output class name : $var"
+  echo -e "${Yel} Compiling.........."
+  javac -g $filename
+  echo -e "${Whi}"
+  ddd -jdb ${var}.class &
 
 #----------------------------------------------------JAVA SCRIPT FILETYPE
 elif [ ${filename: -5} = ".java" ]; then
