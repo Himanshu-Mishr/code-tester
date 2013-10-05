@@ -1,0 +1,7 @@
+todo :-
+ ☐ add debugging option for java 
+ ☐ add codes to check what is not installed
+ ☐  automate the setup of the package
+ ☐ write a script to install the whole program
+ ☐ automactially check what is installed and then print the help menu
+ ☐ try to give out the runtime (that should be in  milliosecond)
