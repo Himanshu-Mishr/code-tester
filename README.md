@@ -4,6 +4,7 @@ code-tester
 the Ultimate Programming Tester
 
 This is a shell script. This script support .c , .cpp , .py , .java files
+This project is not ready yet.(only description on setup is to be done.)
 
 ## Screenshot
 
