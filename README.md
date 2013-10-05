@@ -13,7 +13,7 @@ This project is not ready yet.(only description on setup is to be done.)
 ## Prerequisites 
   
  * gcc         — GNU project C and C++ compiler.
- * g++]         — GNU project C and C++ compiler.
+ * g++         — GNU project C and C++ compiler.
  * python3         — an interpreted, interactive, object-oriented programming language.
  * ipython3 — Tools for Interactive Computing in Python.
  * pypy     — fast, compliant alternative implementation of the Python language.
